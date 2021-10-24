@@ -1,6 +1,7 @@
 /*
 Here is the Problem: https://www.urionlinejudge.com.br/judge/en/problems/view/1531
 */
+package Mathematics;
 import java.util.Scanner;
 
 public class FibonacciAgain {
