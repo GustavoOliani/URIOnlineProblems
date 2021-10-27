@@ -15,13 +15,14 @@ public class TheBigProblem {
         }else{
             possibilities = n*n;
         }
-        
+        // I don't have to know every combination, just how many
         for(a = 2; a <= n; a++){
             condition = n % a;
             for(b = 1; b <= condition; b++){
                 counter++;
             }
         }
+        // max common multiplier
         for (int i = counter; i >= 2; i--){
             if (counter % i == 0 && possibilities % i == 0){
                 counter = counter / i;
