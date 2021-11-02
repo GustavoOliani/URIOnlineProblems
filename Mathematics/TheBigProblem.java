@@ -8,29 +8,43 @@ public class TheBigProblem {
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
-        int n = reader.nextInt();
-        int a, b, counter = 0, condition, possibilities;
-        if (n == 2){
-            possibilities = 1;
-        }else{
-            possibilities = n*n;
+        int n;
+        int numberOfCombination = 0, possibilities;
+        try{
+            while(reader.hasNextInt()){
+                n = reader.nextInt();
+                // operador ternário
+                possibilities = (n == 2)? 1 : n*n;
+                numberOfCombination = CalculatePossibilities(n);
+                CalculateGreatestCommonDivisor(numberOfCombination, possibilities);
+            }
+        }catch(Exception ex){
+            reader.close();
         }
-        // I don't have to know every combination, just how many
+    }
+    public static int CalculatePossibilities(int n){
+        int a, numberOfCombination = 0;
+        /*
+            I don't have to know every combination, just how many;
+            The condition is that B <= the remainer of n / a;
+            There is a number of possibilities igual to B
+            */
         for(a = 2; a <= n; a++){
-            condition = n % a;
-            for(b = 1; b <= condition; b++){
-                counter++;
+            numberOfCombination += n % a;
+        }
+        return numberOfCombination;
+    }
+    // Greatest Common Divisor by try an error
+    public static void CalculateGreatestCommonDivisor(int numberOfCombination, int possibilities){
+        for (int i = numberOfCombination; i >= 2; i--){
+            if (numberOfCombination % i == 0){
+                if (possibilities % i == 0){
+                    numberOfCombination /= i;
+                    possibilities /= i;
+                    break;
+                }
             }
         }
-        // max common multiplier
-        for (int i = counter; i >= 2; i--){
-            if (counter % i == 0 && possibilities % i == 0){
-                counter = counter / i;
-                possibilities = possibilities / i;
-                break;
-            }
-        }
-        System.out.println(counter + "/" + possibilities);
-        reader.close();
+        System.out.println(numberOfCombination + "/" + possibilities);
     }
 }
