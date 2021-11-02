@@ -1,3 +1,9 @@
+/*
+    Here is the problem: https://www.beecrowd.com.br/judge/en/problems/view/1221
+    Here where I got the ideia to use sqr of the number, instead of looking for every single one:
+    https://www.ti-enxame.com/pt/python/verificando-se-um-numero-e-um-numero-primo-em-python/970862199/
+*/
+
 package Mathematics;
 
 import java.util.Scanner;
