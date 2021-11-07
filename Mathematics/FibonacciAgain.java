@@ -9,28 +9,44 @@ public class FibonacciAgain {
         
         Scanner reader = new Scanner(System.in);
         
-        while(reader.hasNextLine()){
-            int n = reader.nextInt();
-            int m = reader.nextInt();
-
-            // Calculate Fib(n)
-            n = CalcularFibonacci(n);
-
-            // Calculate the remainder of Fib(Fib(n)) divided by m
-            System.out.println(CalcularFibonacci(n) % m);
+        try {
+            while(reader.hasNextLine()){
+                long n = reader.nextLong(), m = reader.nextLong();
+    
+                // Calculate Fib(n)
+                n = CalcularFibonacci(n);
+                System.out.println(n);
+                // Calculate the remainder of Fib(Fib(n)) divided by m
+                System.out.println(CalcularFibonacci(n));
+            }
+        } catch (Exception e) {
+            reader.close();
         }
-        reader.close();
     }
 
-    public static int CalcularFibonacci(int n){
+    public static long CalcularFibonacci(long n){
+        long a[][] = {{1,1},{1,0}};
+        a = binaryExp(a, n);
+        return a[1][0];
+    }
 
-        int fib1 = 1, fib2 = 0, inter = 0;
-
-        for (int i = 1; i < n; i++){
-            inter = fib1;
-            fib1 += fib2;
-            fib2 = inter;
+    public static long[][] binaryExp(long[][] base, long expoente){
+        long i[][] = {{1 , 1} , {1 , 1}};
+        if(expoente == 0) return i;
+        else if(expoente == 1) return base;
+        else{
+            long[][] r = binaryExp(base, expoente/2);
+            if(expoente % 2 == 0) {
+                return multMatrix2x2(r, r);
+            }
+            else return multMatrix2x2(base, multMatrix2x2(r, r));
         }
-        return fib1;
+    }
+    //Calcula A*B, onde A e B são matrizes 2x2
+    private static long[][] multMatrix2x2(long[][] a, long[][] b){
+        return new long[][]{{a[0][0] * b[0][0] + a[0][1] * b[1][0],
+                            a[0][0] * b[0][1] + a[0][1] * b[1][1]},
+                            {a[1][0] * b[0][0] + a[1][1] * b[1][0],
+                            a[1][0] * b[0][1] + a[1][1] * b[1][1]}};
     }
 }
