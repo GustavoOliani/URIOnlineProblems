@@ -1,4 +1,5 @@
 package Mathematics;
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -7,47 +8,52 @@ public class AboveAverage {
 
         Scanner reader = new Scanner(System.in);
 
-        int numberOfTestCases, peopleInClass, grade, size;
-        double average = 0;
+        int numberOfTestCases, peopleInClass, grade;
+        double average;
 
         LinkedList<Integer> studentsList = new LinkedList<Integer>();
 
         numberOfTestCases = reader.nextInt();
-        for(int i = 0; i < numberOfTestCases; i++){
-
+        for(int testeCase = 0; testeCase < numberOfTestCases; testeCase++){
+            average = 0;
             studentsList.clear();
             peopleInClass = reader.nextInt();
             
-            for(int j = 0; j < peopleInClass; j++){
+            for(int person = 0; person < peopleInClass; person++){
                 grade = reader.nextInt();
-                average += grade;
-                if(studentsList.isEmpty()){
-                    studentsList.add(grade);
-                }else{
-                    size = studentsList.size();
-                    for (Integer note : studentsList) {
-                        if(grade < note){
-                            studentsList.add(studentsList.indexOf(note), grade);
-                            break;
-                        }
-                    }
-                    if(size == studentsList.size()){
-                        studentsList.add(grade);
-                    }
-                }
+                average += ( (double) grade / peopleInClass);
+                fillAndSort(studentsList, grade);
             }
-            float test;
-            average = average/peopleInClass;
+            aboveAverage(studentsList, average, peopleInClass);
+            
+        }
+        reader.close();
+    }
+    // falta aprimorar ainda
+    public static void fillAndSort(LinkedList<Integer> studentsList, int grade){
+
+        if(studentsList.isEmpty()){
+            studentsList.add(grade);
+        }else{
             for (Integer note : studentsList) {
-                if(note >= average){
-                    test = (peopleInClass - studentsList.indexOf(note))/ peopleInClass;
-                    test = (1 - test) * 100;
-                    System.out.printf("%.3f", test);
-                    System.out.println("%");
+                if(grade < note){
+                    studentsList.add(studentsList.indexOf(note), grade);
                     break;
                 }
             }
         }
-        reader.close();
+    }
+
+    public static void aboveAverage(LinkedList<Integer> studentsList, double average, int peopleInClass){
+        double peopleAboveAverage;
+
+        for (Integer note : studentsList) {
+            if(note > average){
+                peopleAboveAverage = 100.0 * (peopleInClass - studentsList.indexOf(note)) / peopleInClass;
+                System.out.printf("%.3f", peopleAboveAverage);
+                System.out.println("%");
+                break;
+            }
+        }
     }
 }
